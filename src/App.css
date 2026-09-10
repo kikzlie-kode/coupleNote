@@ -103,7 +103,66 @@ body {
 .header .subtitle {
   font-size: var(--font-size-base);
   color: var(--text-light);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Anniversary in Header */
+.header-anniversary {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
   margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.countdown-mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.countdown-number {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--bright-pink);
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: var(--font-size-base);
+  color: var(--text-light);
+}
+
+.anniversary-msg {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
+.btn-anniversary-edit {
+  background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-green));
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-dark);
+}
+
+.btn-anniversary-edit:hover {
+  box-shadow: var(--shadow-light);
+  transform: translateY(-2px);
+}
+
+.form-card-header {
+  background: linear-gradient(135deg, var(--pastel-yellow), var(--pastel-peach));
+  border: 2px solid var(--bright-orange);
+  margin: 0;
 }
 
 .header-info {
@@ -624,76 +683,7 @@ body {
   flex-shrink: 0;
 }
 
-/* ==================== ANNIVERSARY ==================== */
-.countdown-card {
-  background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-purple) 100%);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  text-align: center;
-  box-shadow: var(--shadow-medium);
-  margin-bottom: var(--spacing-lg);
-}
 
-.countdown-display {
-  margin-bottom: var(--spacing-lg);
-}
-
-.countdown-label {
-  font-size: var(--font-size-base);
-  color: var(--text-light);
-  margin-bottom: var(--spacing-md);
-}
-
-.countdown-number {
-  font-size: 64px;
-  font-weight: 700;
-  color: var(--bright-pink);
-  line-height: 1;
-}
-
-.countdown-unit {
-  font-size: var(--font-size-lg);
-  color: var(--text-dark);
-  margin-top: var(--spacing-md);
-}
-
-.anniversary-message {
-  font-size: var(--font-size-lg);
-  color: var(--text-dark);
-  font-weight: 600;
-}
-
-.anniversary-info {
-  background: var(--bg-white);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-light);
-}
-
-.anniversary-info h3 {
-  font-size: var(--font-size-lg);
-  color: var(--text-dark);
-  margin-bottom: var(--spacing-md);
-}
-
-.timeline-item {
-  background: linear-gradient(135deg, var(--pastel-green), var(--pastel-blue));
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-}
-
-.timeline-label {
-  font-size: var(--font-size-base);
-  color: var(--text-light);
-  margin-bottom: var(--spacing-xs);
-}
-
-.timeline-value {
-  font-size: var(--font-size-md);
-  font-weight: 600;
-  color: var(--text-dark);
-}
 
 /* ==================== EMPTY STATE ==================== */
 .empty-state {

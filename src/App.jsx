@@ -24,18 +24,11 @@ export default function App() {
           active={activeTab === 'event'}
           onClick={() => setActiveTab('event')}
         />
-        <TabButton 
-          tab="anniversary" 
-          label="💑 Anniversary" 
-          active={activeTab === 'anniversary'}
-          onClick={() => setActiveTab('anniversary')}
-        />
       </div>
 
       <div className="content-wrapper">
         {activeTab === 'wallet' && <WalletModule user={user} partner={partner} />}
         {activeTab === 'event' && <EventModule />}
-        {activeTab === 'anniversary' && <AnniversaryModule />}
       </div>
     </div>
   );
@@ -43,10 +36,48 @@ export default function App() {
 
 // ==================== HEADER ====================
 function Header({ user }) {
+  const [anniversary, setAnniversary] = React.useState({
+    date: '2024-12-25',
+    daysUntil: calculateDaysUntil('12-25'),
+    message: '💑 ครบรอบรักษ์คน',
+  });
+
+  const [showEditForm, setShowEditForm] = React.useState(false);
+
   return (
     <div className="header">
       <h1>💑 Our Expenses</h1>
       <p className="subtitle">Tracking life together</p>
+      
+      {/* Anniversary Section */}
+      <div className="header-anniversary">
+        <div className="countdown-mini">
+          <span className="countdown-number">{anniversary.daysUntil}</span>
+          <span className="countdown-label">days until anniversary</span>
+        </div>
+        <p className="anniversary-msg">{anniversary.message}</p>
+        <button 
+          className="btn-anniversary-edit"
+          onClick={() => setShowEditForm(!showEditForm)}
+        >
+          ✏️ Edit
+        </button>
+      </div>
+
+      {showEditForm && (
+        <AnniversaryEditForm 
+          anniversary={anniversary}
+          onSave={(updated) => {
+            setAnniversary({
+              ...updated,
+              daysUntil: calculateDaysUntil(updated.date)
+            });
+            setShowEditForm(false);
+          }}
+          onCancel={() => setShowEditForm(false)}
+        />
+      )}
+
       <div className="header-info">
         <span className="user-badge">👤 {user.name}</span>
       </div>
@@ -523,69 +554,9 @@ function EventCard({ event }) {
   );
 }
 
-// ==================== ANNIVERSARY MODULE ====================
-function AnniversaryModule() {
-  const [anniversary, setAnniversary] = useState({
-    date: '2024-12-25',
-    daysUntil: calculateDaysUntil('12-25'),
-    message: '💑 ครบรอบรักษ์คน',
-  });
-
-  const [showForm, setShowForm] = useState(false);
-
-  return (
-    <div className="module-container anniversary-module">
-      <div className="countdown-card">
-        <div className="countdown-display">
-          <p className="countdown-label">Until Anniversary</p>
-          <div className="countdown-number">{anniversary.daysUntil}</div>
-          <p className="countdown-unit">days</p>
-        </div>
-        <p className="anniversary-message">{anniversary.message}</p>
-      </div>
-
-      <button 
-        className="btn btn-secondary btn-block"
-        onClick={() => setShowForm(!showForm)}
-      >
-        ✏️ Edit Anniversary
-      </button>
-
-      {showForm && (
-        <AnniversaryForm 
-          anniversary={anniversary}
-          onSave={(updated) => {
-            setAnniversary({
-              ...updated,
-              daysUntil: calculateDaysUntil(updated.date)
-            });
-            setShowForm(false);
-          }}
-          onCancel={() => setShowForm(false)}
-        />
-      )}
-
-      <div className="anniversary-info">
-        <h3>💑 Relationship Timeline</h3>
-        <div className="timeline-item">
-          <p className="timeline-label">Together Since</p>
-          <p className="timeline-value">December 25, 2024</p>
-        </div>
-        <div className="timeline-item">
-          <p className="timeline-label">This Year's Anniversary</p>
-          <p className="timeline-value">December 25, 2025</p>
-        </div>
-        <div className="timeline-item">
-          <p className="timeline-label">Years Together</p>
-          <p className="timeline-value">1 year 🎉</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function AnniversaryForm({ anniversary, onSave, onCancel }) {
-  const [formData, setFormData] = useState({
+// ==================== ANNIVERSARY EDIT FORM (for Header) ====================
+function AnniversaryEditForm({ anniversary, onSave, onCancel }) {
+  const [formData, setFormData] = React.useState({
     date: anniversary.date,
     message: anniversary.message,
   });
@@ -596,7 +567,7 @@ function AnniversaryForm({ anniversary, onSave, onCancel }) {
   };
 
   return (
-    <div className="form-card">
+    <div className="form-card form-card-header">
       <h3>Edit Anniversary</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -615,7 +586,7 @@ function AnniversaryForm({ anniversary, onSave, onCancel }) {
             placeholder="Write your message..."
             value={formData.message}
             onChange={(e) => setFormData({...formData, message: e.target.value})}
-            rows="3"
+            rows="2"
           />
         </div>
 
@@ -624,7 +595,7 @@ function AnniversaryForm({ anniversary, onSave, onCancel }) {
             Cancel
           </button>
           <button type="submit" className="btn btn-primary">
-            Save Changes
+            Save
           </button>
         </div>
       </form>
