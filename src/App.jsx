@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import coupleImage from './assets/couple.jpg';
+import coupleImage from './assets/couple.png';
 
 // ==================== MAIN APP ====================
 export default function App() {

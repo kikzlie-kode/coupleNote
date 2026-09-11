@@ -111,11 +111,11 @@ body {
 .header-anniversary-image {
   width: 100%;
   height: auto;
-  max-height: 280px;
+  max-height: 200px;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding-top:10px;
   object-fit: cover;
   object-position: bottom;
-  margin: var(--spacing-lg) -16px -1px -16px;
   display: block;
 }
 
