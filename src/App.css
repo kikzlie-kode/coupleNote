@@ -1,11 +1,11 @@
 /* ==================== ROOT VARIABLES - PASTEL THEME ==================== */
 :root {
   /* Pastel Colors */
-  --pastel-pink: #FFB3D9;
+  --pastel-pink: #fcebf9;
   --pastel-blue: #B3D9FF;
   --pastel-green: #B3FFD9;
   --pastel-yellow: #FFFBB3;
-  --pastel-purple: #D9B3FF;
+  --pastel-purple: #E6D4FF;
   --pastel-peach: #FFD4B3;
   
   /* Bright Accent Colors */
@@ -86,11 +86,14 @@ body {
 
 /* ==================== HEADER ==================== */
 .header {
-  background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-purple) 100%);
+  background: linear-gradient(0deg, var(--pastel-pink) 0%, var(--pastel-purple) 100%);
   padding: var(--spacing-lg) var(--spacing-md);
   text-align: center;
   box-shadow: var(--shadow-light);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header h1 {
@@ -111,7 +114,7 @@ body {
   background: rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  /* margin-bottom: var(--spacing-md); */
   text-align: center;
 }
 

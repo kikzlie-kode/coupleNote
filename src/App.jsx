@@ -10,17 +10,17 @@ export default function App() {
   return (
     <div className="app-container">
       <Header user={user} />
-      
+
       <div className="tab-navigation">
-        <TabButton 
-          tab="wallet" 
-          label="💰 Wallet" 
+        <TabButton
+          tab="wallet"
+          label="💰 Wallet"
           active={activeTab === 'wallet'}
           onClick={() => setActiveTab('wallet')}
         />
-        <TabButton 
-          tab="event" 
-          label="📅 Event" 
+        <TabButton
+          tab="event"
+          label="📅 Event"
           active={activeTab === 'event'}
           onClick={() => setActiveTab('event')}
         />
@@ -43,28 +43,70 @@ function Header({ user }) {
   });
 
   const [showEditForm, setShowEditForm] = React.useState(false);
+  const [relationshipDuration, setRelationshipDuration] = React.useState({
+    years: 0,
+    months: 0,
+    days: 0,
+  });
+
+  // Calculate relationship duration in realtime
+  React.useEffect(() => {
+    const calculateDuration = () => {
+      const startDate = new Date(2024, 1, 29); // 29/02/2024
+      const today = new Date();
+
+      let years = today.getFullYear() - startDate.getFullYear();
+      let months = today.getMonth() - startDate.getMonth();
+      let days = today.getDate() - startDate.getDate();
+
+      // Adjust for negative days
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+
+      // Adjust for negative months
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      setRelationshipDuration({ years, months, days });
+    };
+
+    calculateDuration();
+
+    // Update every second for realtime effect
+    const interval = setInterval(calculateDuration, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="header">
-      <h1>💑 Our Expenses</h1>
-      <p className="subtitle">Tracking life together</p>
-      
+      <div style={{ textAlign: 'left' }}>
+        <h1 style={{ letterSpacing: '0.2rem', color: '#272626' }}>Anniversary</h1>
+        <p className="subtitle">Tracking life together</p>
+      </div>
       {/* Anniversary Section */}
-      <div className="header-anniversary">
-        <div className="countdown-mini">
-          <span className="countdown-number">{anniversary.daysUntil}</span>
-          <span className="countdown-label">days until anniversary</span>
+      <div>
+        <div className="header-anniversary">
+          <div className="countdown-mini">
+            <span className="countdown-number">{anniversary.daysUntil}</span>
+            <span className="countdown-label">days</span>
+          </div>
+          {/* <p className="anniversary-msg">{anniversary.message}</p> */}
         </div>
-        <p className="anniversary-msg">{anniversary.message}</p>
-        <button 
+        {/* <button 
           className="btn-anniversary-edit"
           onClick={() => setShowEditForm(!showEditForm)}
         >
           ✏️ Edit
-        </button>
+        </button> */}
       </div>
 
-      {showEditForm && (
+      {/* {showEditForm && (
         <AnniversaryEditForm 
           anniversary={anniversary}
           onSave={(updated) => {
@@ -76,11 +118,11 @@ function Header({ user }) {
           }}
           onCancel={() => setShowEditForm(false)}
         />
-      )}
+      )} */}
 
-      <div className="header-info">
+      {/* <div className="header-info">
         <span className="user-badge">👤 {user.name}</span>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -88,7 +130,7 @@ function Header({ user }) {
 // ==================== TAB BUTTON ====================
 function TabButton({ tab, label, active, onClick }) {
   return (
-    <button 
+    <button
       className={`tab-button ${active ? 'active' : ''}`}
       onClick={onClick}
     >
@@ -129,12 +171,12 @@ function WalletModule({ user, partner }) {
       time: '19:00',
     },
   ]);
-  
+
   const [selectedCategory, setSelectedCategory] = useState('all');
   const categories = ['all', 'food', 'gas', 'borrow', 'activity'];
 
-  const filteredExpenses = selectedCategory === 'all' 
-    ? expenses 
+  const filteredExpenses = selectedCategory === 'all'
+    ? expenses
     : expenses.filter(e => e.category === selectedCategory);
 
   const totalAmount = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
@@ -162,7 +204,7 @@ function WalletModule({ user, partner }) {
       {/* Category Filter */}
       <div className="category-filter">
         {categories.map(cat => (
-          <button 
+          <button
             key={cat}
             className={`filter-button ${selectedCategory === cat ? 'active' : ''}`}
             onClick={() => setSelectedCategory(cat)}
@@ -173,7 +215,7 @@ function WalletModule({ user, partner }) {
       </div>
 
       {/* Add Expense Button */}
-      <button 
+      <button
         className="btn btn-primary btn-block"
         onClick={() => setShowAddForm(!showAddForm)}
       >
@@ -234,11 +276,11 @@ function ExpenseForm({ onAdd, onCancel }) {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Amount (฿)</label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             placeholder="0"
             value={formData.amount}
-            onChange={(e) => setFormData({...formData, amount: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
             required
           />
         </div>
@@ -246,9 +288,9 @@ function ExpenseForm({ onAdd, onCancel }) {
         <div className="form-row">
           <div className="form-group">
             <label>Category</label>
-            <select 
+            <select
               value={formData.category}
-              onChange={(e) => setFormData({...formData, category: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
             >
               <option value="food">🍔 Food</option>
               <option value="gas">⛽ Gas</option>
@@ -259,9 +301,9 @@ function ExpenseForm({ onAdd, onCancel }) {
 
           <div className="form-group">
             <label>Paid By</label>
-            <select 
+            <select
               value={formData.paidBy}
-              onChange={(e) => setFormData({...formData, paidBy: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, paidBy: e.target.value })}
             >
               <option value="kik">Kik</option>
               <option value="partner">Partner</option>
@@ -272,30 +314,30 @@ function ExpenseForm({ onAdd, onCancel }) {
         <div className="form-row">
           <div className="form-group">
             <label>Date</label>
-            <input 
+            <input
               type="date"
               value={formData.date}
-              onChange={(e) => setFormData({...formData, date: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             />
           </div>
 
           <div className="form-group">
             <label>Time</label>
-            <input 
+            <input
               type="time"
               value={formData.time}
-              onChange={(e) => setFormData({...formData, time: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
             />
           </div>
         </div>
 
         <div className="form-group">
           <label>Description (optional)</label>
-          <input 
+          <input
             type="text"
             placeholder="What was it for?"
             value={formData.description}
-            onChange={(e) => setFormData({...formData, description: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
         </div>
 
@@ -335,10 +377,10 @@ function ExpenseCard({ expense }) {
 
 function MonthlySummary({ expenses }) {
   const currentMonth = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
-  
+
   const categories = ['food', 'gas', 'borrow', 'activity'];
   const summary = {};
-  
+
   categories.forEach(cat => {
     summary[cat] = expenses
       .filter(e => e.category === cat)
@@ -401,7 +443,7 @@ function EventModule() {
 
   return (
     <div className="module-container event-module">
-      <button 
+      <button
         className="btn btn-primary btn-block"
         onClick={() => setShowAddForm(!showAddForm)}
       >
@@ -457,42 +499,42 @@ function EventForm({ onAdd, onCancel }) {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Event Title *</label>
-          <input 
+          <input
             type="text"
             placeholder="Movie date, Dinner, etc"
             value={formData.title}
-            onChange={(e) => setFormData({...formData, title: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             required
           />
         </div>
 
         <div className="form-group">
           <label>Description</label>
-          <input 
+          <input
             type="text"
             placeholder="Add details..."
             value={formData.description}
-            onChange={(e) => setFormData({...formData, description: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
         </div>
 
         <div className="form-row">
           <div className="form-group">
             <label>Date *</label>
-            <input 
+            <input
               type="date"
               value={formData.date}
-              onChange={(e) => setFormData({...formData, date: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
               required
             />
           </div>
 
           <div className="form-group">
             <label>Time *</label>
-            <input 
+            <input
               type="time"
               value={formData.time}
-              onChange={(e) => setFormData({...formData, time: e.target.value})}
+              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
               required
             />
           </div>
@@ -500,19 +542,19 @@ function EventForm({ onAdd, onCancel }) {
 
         <div className="form-group">
           <label>Location</label>
-          <input 
+          <input
             type="text"
             placeholder="Where are you going?"
             value={formData.location}
-            onChange={(e) => setFormData({...formData, location: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           />
         </div>
 
         <div className="form-group">
           <label>Remind Me</label>
-          <select 
+          <select
             value={formData.notification}
-            onChange={(e) => setFormData({...formData, notification: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, notification: e.target.value })}
           >
             <option value="30min_before">30 minutes before</option>
             <option value="1hour_before">1 hour before</option>
@@ -572,20 +614,20 @@ function AnniversaryEditForm({ anniversary, onSave, onCancel }) {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Anniversary Date *</label>
-          <input 
+          <input
             type="date"
             value={formData.date}
-            onChange={(e) => setFormData({...formData, date: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             required
           />
         </div>
 
         <div className="form-group">
           <label>Anniversary Message</label>
-          <textarea 
+          <textarea
             placeholder="Write your message..."
             value={formData.message}
-            onChange={(e) => setFormData({...formData, message: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             rows="2"
           />
         </div>
@@ -619,11 +661,11 @@ function calculateDaysUntil(dateString) {
   const [month, day] = dateString.split('-').map(Number);
   const today = new Date();
   let anniversary = new Date(today.getFullYear(), month - 1, day);
-  
+
   if (anniversary < today) {
     anniversary = new Date(today.getFullYear() + 1, month - 1, day);
   }
-  
+
   const diff = anniversary - today;
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
