@@ -85,9 +85,9 @@ function Header({ user }) {
 
   return (
     <div className="header">
-      <div style={{ textAlign: 'left' }}>
-        <h1 style={{ letterSpacing: '0.2rem', color: '#272626' }}>Anniversary</h1>
-        <p className="subtitle">Tracking life together</p>
+      <div style={{ textAlign: 'left'}}>
+        <p style={{ letterSpacing: '0.2rem', color: '#272626' }}> 💖 Anniversary</p>
+        <h1  style={{ letterSpacing: '0.1rem', color: '#272626',fontSize: '1.5rem' }}>{relationshipDuration.years} Y {relationshipDuration.months} M {relationshipDuration.days} D</h1>
       </div>
       {/* Anniversary Section */}
       <div>

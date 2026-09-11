@@ -101,13 +101,16 @@ body {
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: var(--spacing-xs);
+  padding: 0 10px 0 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-md);
 }
 
-.header .subtitle {
+/* .header .subtitle {
   font-size: var(--font-size-base);
   color: var(--text-light);
   margin-bottom: var(--spacing-lg);
-}
+} */
 
 /* Anniversary in Header */
 .header-anniversary {
