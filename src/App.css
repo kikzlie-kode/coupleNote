@@ -7,13 +7,13 @@
   --pastel-yellow: #FFFBB3;
   --pastel-purple: #E6D4FF;
   --pastel-peach: #FFD4B3;
-  
+
   /* Bright Accent Colors */
   --bright-pink: #FF69B4;
   --bright-blue: #3498DB;
   --bright-green: #2ECC71;
   --bright-orange: #FF8C3A;
-  
+
   /* Neutral Colors */
   --text-dark: #2C3E50;
   --text-light: #7F8C8D;
@@ -21,25 +21,25 @@
   --bg-white: #FFFFFF;
   --border-light: #E8E8E8;
   --border-medium: #D0D0D0;
-  
+
   /* Shadows */
   --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.08);
   --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.16);
-  
+
   /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  
+
   /* Font */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   --font-size-sm: 12px;
@@ -57,7 +57,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
 }
@@ -81,13 +82,14 @@ body {
   flex-direction: column;
   height: 100vh;
   background: linear-gradient(135deg, #FFF8F5 0%, #F0F8FF 100%);
-  padding-bottom: 60px; /* Space for tab navigation */
+  padding-bottom: 60px;
+  /* Space for tab navigation */
 }
 
 /* ==================== HEADER ==================== */
 .header {
   background: linear-gradient(0deg, var(--pastel-pink) 0%, var(--pastel-purple) 100%);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: 0 var(--spacing-md);
   text-align: center;
   box-shadow: var(--shadow-light);
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -104,6 +106,17 @@ body {
   padding: 0 10px 0 10px;
   background: rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-md);
+}
+
+.header-anniversary-image {
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  object-fit: cover;
+  object-position: bottom;
+  margin: var(--spacing-lg) -16px -1px -16px;
+  display: block;
 }
 
 /* .header .subtitle {
@@ -755,6 +768,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

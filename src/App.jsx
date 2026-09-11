@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import coupleImage from './assets/couple.jpg';
 
 // ==================== MAIN APP ====================
 export default function App() {
@@ -90,21 +91,28 @@ function Header({ user }) {
         <h1  style={{ letterSpacing: '0.1rem', color: '#272626',fontSize: '1.5rem' }}>{relationshipDuration.years} Y {relationshipDuration.months} M {relationshipDuration.days} D</h1>
       </div>
       {/* Anniversary Section */}
-      <div>
+       <div>
+        <img 
+          src={coupleImage}
+          alt="Our Couple" 
+          className="header-anniversary-image"
+        />
+      </div>
+      {/* <div>
         <div className="header-anniversary">
           <div className="countdown-mini">
             <span className="countdown-number">{anniversary.daysUntil}</span>
             <span className="countdown-label">days</span>
           </div>
-          {/* <p className="anniversary-msg">{anniversary.message}</p> */}
+          <p className="anniversary-msg">{anniversary.message}</p>
         </div>
-        {/* <button 
+        <button 
           className="btn-anniversary-edit"
           onClick={() => setShowEditForm(!showEditForm)}
         >
           ✏️ Edit
-        </button> */}
-      </div>
+        </button>
+      </div> */}
 
       {/* {showEditForm && (
         <AnniversaryEditForm 
